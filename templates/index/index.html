@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Last.fm Popular Artists{% endblock %}
+
+{% block content %}
+<div class="inner cover">
+	<h1 class="cover-heading">Who is the most popular artist?</h1>
+	<p class="lead">
+		<form id="search" action="/artist/list" method="GET">
+			<input type="text" name="country" class="form-control input-lg" placeholder="Country name">
+			<a href="#" class="btn btn-lg btn-success">Find out</a>
+		</form>
+	</p>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$('#search .btn').on('click', function(event) {
+			var url = $(this).parent().attr('action');
+
+			url += '/' + $(this).parent().find('input[name="country"]').val();
+
+			window.location.href = url;
+		});
+	});
+</script>
+{% endblock %}

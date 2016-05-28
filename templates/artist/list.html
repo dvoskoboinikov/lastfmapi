@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}The most popular artists in {{ data.topartists['@attr'].country }}{% endblock %}
+
+{% block navbar %}
+<div class="masthead clearfix">
+	<div class="inner">
+		<h3 class="masthead-brand">The most popular in <strong>{{ data.topartists['@attr'].country }}</strong></h3>
+		<nav>
+			<ul class="nav masthead-nav">
+				<form id="search" action="/artist/list" method="GET">
+					<input type="text" name="country" class="form-control" placeholder="Country name">
+					<a href="#" class="btn btn-success">Find out</a>
+				</form>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$('#search .btn').on('click', function(event) {console.log($(this));
+			var url = $(this).parent().attr('action');
+
+			url += '/' + $(this).parent().find('input[name="country"]').val();
+
+			window.location.href = url;
+		});
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="inner cover">
+	<div class="row">
+		{% for artist in data.topartists.artist %}
+			<div class="col-xs-6 col-md-3">
+				<a href="{{ path_for('artist.track.list', { 'artist': artist.name }) }}" class="thumbnail">
+					<img src="{{ artist.image[2]['#text'] }}" alt="{{ artist.name }}" class="fade">
+					<span>{{ artist.name }}</span>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<nav>
+		<ul class="pager">
+			{% if data.topartists['@attr'].page > 1 %}
+				<li><a href="{{ path_for('artist.list', { 'country': data.topartists['@attr'].country, 'page': data.topartists['@attr'].page - 1 }) }}">Previous</a></li>
+			{% endif %}
+			{% if data.topartists['@attr'].page < data.topartists['@attr'].totalPages %}
+				<li><a href="{{ path_for('artist.list', { 'country': data.topartists['@attr'].country, 'page': data.topartists['@attr'].page + 1 }) }}">Next</a></li>
+			{% endif %}
+		</ul>
+	</nav>
+</div>
+{% endblock %}

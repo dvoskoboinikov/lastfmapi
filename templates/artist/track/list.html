@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}The most popular tracks of {{ data.toptracks['@attr'].artist }}{% endblock %}
+
+{% block navbar %}
+<div class="masthead clearfix">
+	<div class="inner">
+		<h3 class="masthead-brand">The most popular tracks of <strong>{{ data.toptracks['@attr'].artist }}</strong></h3>
+		<nav>
+			<ul class="nav masthead-nav">
+				<form id="search" action="/artist/list" method="GET">
+					<input type="text" name="country" class="form-control" placeholder="Country name">
+					<a href="#" class="btn btn-success">Find out</a>
+				</form>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$('#search .btn').on('click', function(event) {console.log($(this));
+			var url = $(this).parent().attr('action');
+
+			url += '/' + $(this).parent().find('input[name="country"]').val();
+
+			window.location.href = url;
+		});
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="inner cover">
+	<div class="row">
+		{% for track in data.toptracks.track %}
+			<div class="col-xs-6 col-md-3">
+				<a href="{{ track.url }}" class="thumbnail">
+					<img src="{{ track.image[2]['#text'] }}" alt="{{ artist.name }}" class="fade">
+					<span>{{ track.name }}</span>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<nav>
+		<ul class="pager">
+			{% if data.toptracks['@attr'].page > 1 %}
+				<li><a href="{{ path_for('artist.track.list', { 'artist': data.toptracks['@attr'].artist, 'page': data.toptracks['@attr'].page - 1 }) }}">Previous</a></li>
+			{% endif %}
+			{% if data.toptracks['@attr'].page < data.toptracks['@attr'].totalPages %}
+				<li><a href="{{ path_for('artist.track.list', { 'artist': data.toptracks['@attr'].artist, 'page': data.toptracks['@attr'].page + 1 }) }}">Next</a></li>
+			{% endif %}
+		</ul>
+	</nav>
+</div>
+{% endblock %}
