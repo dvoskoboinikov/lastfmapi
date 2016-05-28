@@ -66,9 +66,11 @@ class Api implements DataProviderInterface
      */
     protected function normalizeData(array $data)
     {
-        if (count($data['topartists']['artist']) > $this->apiSettings['limit']) {
-            $data['topartists']['artist'] =
-                array_slice($data['topartists']['artist'], $this->apiSettings['limit'] * -1);
+        if (isset($data['topartists'])) {
+            if (count($data['topartists']['artist']) > $this->apiSettings['limit']) {
+                $data['topartists']['artist'] =
+                    array_slice($data['topartists']['artist'], $this->apiSettings['limit'] * -1);
+            }
         }
 
         return $data;

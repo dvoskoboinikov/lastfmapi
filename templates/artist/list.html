@@ -5,7 +5,10 @@
 {% block navbar %}
 <div class="masthead clearfix">
 	<div class="inner">
-		<h3 class="masthead-brand">The most popular in <strong>{{ data.topartists['@attr'].country }}</strong></h3>
+		<a class="lastfm-logo" href="/"></a>
+		{% if data.topartists is defined %}
+			<h3 class="masthead-brand">presents the most popular in <strong>{{ data.topartists['@attr'].country }}</strong></h3>
+		{% endif %}
 		<nav>
 			<ul class="nav masthead-nav">
 				<form id="search" action="/artist/list" method="GET">
@@ -41,14 +44,18 @@
 {% block content %}
 <div class="inner cover">
 	<div class="row">
-		{% for artist in data.topartists.artist %}
-			<div class="col-xs-6 col-md-3">
-				<a href="{{ path_for('artist.track.list', { 'artist': artist.name }) }}" class="thumbnail">
-					<img src="{{ artist.image[2]['#text'] }}" alt="{{ artist.name }}" class="fade">
-					<span>{{ artist.name }}</span>
-				</a>
-			</div>
-		{% endfor %}
+		{% if data.topartists is defined %}
+			{% for artist in data.topartists.artist %}
+				<div class="col-xs-6 col-md-3">
+					<a href="{{ path_for('artist.track.list', { 'artist': artist.name }) }}" class="thumbnail">
+						<img src="{{ artist.image[2]['#text'] }}" alt="{{ artist.name }}" class="fade">
+						<span>{{ artist.name }}</span>
+					</a>
+				</div>
+			{% endfor %}
+		{% else %}
+			Seems like there are no popular artists in this country. Please try another.
+		{% endif %}
 	</div>
 
 	<nav>

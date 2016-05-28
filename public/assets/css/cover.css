@@ -57,16 +57,25 @@ body {
 .inner {
   padding: 30px;
 }
+.inner .lastfm-logo {
+    background-image: url("http://cdn.lst.fm/flatness/header/lastfm_logo_red.png");
+    height: 30px;
+    left: 19px;
+    position: absolute;
+    top: 30px;
+    width: 90px;
+}
 
 
 /*
  * Header
  */
 .masthead-brand {
-  margin-top: 5px;
+  margin-top: 10px;
   margin-bottom: 0;
+  margin-left: 85px;
+  font-size: 18px;
 }
-
 .masthead-nav > li {
   display: inline-block;
 }

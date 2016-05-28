@@ -26,12 +26,10 @@ class ListAction extends AbstractAction
         ResponseInterface $response,
         array $args
     ) {
-        //if (isset($args['country'])) {
-            //return $response->withStatus(302)->withHeader('Location', '/');
-        //}
+        $country = isset($args['country']) ? $args['country'] : '';
+        $page = isset($args['page']) ? $args['page'] : 1;
 
-        $data = $this->ci->get('geoDataProvider')
-            ->getTopArtists($args['country'], isset($args['page']) ? $args['page'] : 1);
+        $data = $this->ci->get('geoDataProvider')->getTopArtists($country, $page);
 
         return $this->ci->get('view')->render($response, $this->template, ['data' => $data]);
     }

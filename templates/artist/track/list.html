@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}The most popular tracks of {{ data.toptracks['@attr'].artist }}{% endblock %}
+{% block title %}The most popular tracks{% endblock %}
 
 {% block navbar %}
 <div class="masthead clearfix">
 	<div class="inner">
-		<h3 class="masthead-brand">The most popular tracks of <strong>{{ data.toptracks['@attr'].artist }}</strong></h3>
+		<a class="lastfm-logo" href="/"></a>
+		{% if data.toptracks is defined %}
+			<h3 class="masthead-brand">presents the most popular of <strong>{{ data.toptracks['@attr'].artist }}</strong></h3>
+		{% endif %}
 		<nav>
 			<ul class="nav masthead-nav">
 				<form id="search" action="/artist/list" method="GET">
@@ -41,6 +44,7 @@
 {% block content %}
 <div class="inner cover">
 	<div class="row">
+	{% if data.toptracks is defined %}
 		{% for track in data.toptracks.track %}
 			<div class="col-xs-6 col-md-3">
 				<a href="{{ track.url }}" class="thumbnail">
@@ -49,6 +53,9 @@
 				</a>
 			</div>
 		{% endfor %}
+	{% else %}
+		Seems like this artist has no popular tracks. Please try another.
+	{% endif %}
 	</div>
 
 	<nav>

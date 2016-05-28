@@ -2,6 +2,14 @@
 
 $container = $app->getContainer();
 
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container) {
+        $container['view']->render($response, '404.html');
+
+        return $response->withStatus(404);
+    };
+};
+
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig('../templates', [
         'cache' => false

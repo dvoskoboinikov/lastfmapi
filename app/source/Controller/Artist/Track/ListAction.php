@@ -26,8 +26,10 @@ class ListAction extends AbstractAction
         ResponseInterface $response,
         array $args
     ) {
-        $data = $this->ci->get('artistDataProvider')
-            ->getTopTracks($args['artist'], '', isset($args['page']) ? $args['page'] : 1);
+        $artist = isset($args['artist']) ? $args['artist'] : '';
+        $page = isset($args['page']) ? $args['page'] : 1;
+
+        $data = $this->ci->get('artistDataProvider')->getTopTracks($artist, '', $page);
 
         return $this->ci->get('view')->render($response, $this->template, ['data' => $data]);
     }
