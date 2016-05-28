@@ -19,12 +19,20 @@
 
 <script>
 	$(document).ready(function() {
-		$('#search .btn').on('click', function(event) {console.log($(this));
+		$('#search .btn').on('click', function(event) {
 			var url = $(this).parent().attr('action');
 
 			url += '/' + $(this).parent().find('input[name="country"]').val();
 
 			window.location.href = url;
+		});
+
+		$('#search input').keyup(function(event) {
+			if (event.keyCode == 13) {
+				event.preventDefault();
+
+				$('#search .btn').trigger('click');
+			}
 		});
 	});
 </script>

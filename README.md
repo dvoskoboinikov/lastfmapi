@@ -31,3 +31,4 @@ $ ./vendor/bin/phpcs
 * Implement API requests caching using Memcached to improve application performance.
 * Add autocomplete feature to input fields (country e.g.) to improve user experience.
 * Implement proper API errors handling to improve user and developer experience.
+* Move inline JS code to separate files to improve developer experience.
